@@ -9,7 +9,7 @@ class DashboardController extends Controller
 {
     public function DashboardView()
     {
-        $transaction = transaction::all();
+        $transaction = transaction::paginate(10);
         return view('dashboard.dashboard', ['transactions' => $transaction]);
     }
     public function AddTransactionView()

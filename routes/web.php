@@ -36,4 +36,5 @@ Route::group(['dashboard' => 'App\Http\Controllers'], function () {
     Route::post('/car', [CarController::class, 'create'])->name('car-creation');
     Route::get('/edit-car/{id}', [DashboardController::class, 'EditTransactionView'])->name('car-edit');
     Route::put('/car/{id}', [CarController::class, 'edit'])->name('car-edit-creation');
+    Route::get("/car/{id}", [CarController::class, 'destroy'])->name('car-destroy');
 });

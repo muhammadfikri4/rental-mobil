@@ -66,21 +66,63 @@
                                         <button
                                             class="bg-yellow-500 hover:bg-yellow-700 px-2 py-1 rounded-md text-white duration-300">Edit</button>
                                     </a>
-                                    <button
-                                        class="bg-red-500 hover:bg-red-700 px-2 py-1 rounded-md text-white duration-300">Delete</button>
+                                    <button data-id="{{ $transaction->id }}" data-transaction="{{ $transaction->name }}"
+                                        class="bg-red-500 hover:bg-red-700 px-2 py-1 rounded-md text-white duration-300 delete">
+                                        Delete
+                                    </button>
                                 </div>
                             </td>
                         </tr>
                     @endforeach
-
-
-
-
                 </tbody>
             </table>
         </div>
 
+        {{ $transactions->links() }}
+
     </div>
+    @include('sweetalert::alert')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"
+        integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        const swalDel = (classBtn, dataAttr, url) => {
+            $(classBtn).click(function() {
+                const id = $(this).attr('data-id');
+                const attributeData = $(this).attr(dataAttr);
+                Swal.fire({
+                    title: 'Anda Yakin?',
+                    text: `Anda Akan Menghapus Data ${attributeData}`,
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: "Hapus",
+                    cancelButtonText: "Batal",
+                    reverseButtons: true,
+                    customClass: {
+                        confirmButton: 'confirm-button-class',
+                        cancelButton: 'cancel-button-class',
+                        title: 'title-class',
+                        icon: 'icon-class',
+                        text: 'text-class'
+                    }
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location = `/${url}/${id}`;
+                        // Swal.fire(
+                        //     'Deleted!',
+                        //     'Data Berhasil Dihapus!',
+                        //     'success'
+                        // )
+                    }
+                })
+
+            })
+        }
+        swalDel('.delete', 'data-transaction', 'car');
+    </script>
 </body>
 
 </html>

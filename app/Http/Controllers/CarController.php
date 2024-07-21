@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\transaction;
 use Illuminate\Http\Request;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class CarController extends Controller
 {
@@ -39,5 +40,11 @@ class CarController extends Controller
         } else {
             return redirect('/edit-car');
         }
+    }
+    public function destroy($id)
+    {
+        transaction::where('id', $id)->delete();
+        Alert::success('Berhasil!', 'Berhasil Menghapus Anggota!');
+        return redirect('/');
     }
 }
